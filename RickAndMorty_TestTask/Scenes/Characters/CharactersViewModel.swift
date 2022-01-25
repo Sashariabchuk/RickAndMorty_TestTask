@@ -20,15 +20,7 @@ public class CharactersViewModel: ObservableObject {
     var cancellable =  Set<AnyCancellable>()
     
     init() {
-//        $searchText
-//            .debounce(for: 0.5, scheduler: RunLoop.main)
-//            .removeDuplicates()
-//            .sink(receiveValue: { (text: String) in
-//                if !text.isEmpty && text.count > 3 {
-//                    self.getCharacters(for: text)
-//                }
-//            })
-//            .store(in: &cancellable)
+        getCharactersList()
     }
     
     func getCharactersList() {
@@ -48,28 +40,9 @@ public class CharactersViewModel: ObservableObject {
             })
             .store(in: &cancellable)
     }
-    
-//    func getCharacters(for name: String = "") {
-//        let endpoint = Endpoint.getCharacters(name: searchText, page: currentPage)
-//
-//        request(endpoint)
-//            .mapError({ (error) -> Error in
-//                print(error)
-//                return error
-//            })
-//            .sink(receiveCompletion: { _ in }, receiveValue: {
-//                self.currentPage += 1
-//                if $0.results.count < self.maxItemPerPage {
-//                    self.characterListFull = true
-//                }
-//            })
-//            .store(in: &cancellable)
-//    }
-    
+   
     func request(_ endpoint: Endpoint) -> AnyPublisher<CharacterList, Error> {
-
         let request = URLRequest(url: endpoint.url)
-        
         return APIClient.fetch(request)
             .map(\.value)
             .eraseToAnyPublisher()
