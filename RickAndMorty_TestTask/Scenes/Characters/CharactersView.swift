@@ -13,6 +13,14 @@ struct CharactersView: View {
     
     @State private var isSelected = false
     
+    private var characters: [Character] {
+        if viewModel.searchText.isEmpty {
+            return viewModel.characters
+        } else {
+            return viewModel.characters.filter { $0.name.contains(viewModel.searchText) }
+        }
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -41,17 +49,6 @@ struct CharactersView: View {
             }
         }
     }
-    
-    var characters: [Character] {
-        if viewModel.filteredCharacters.isEmpty {
-            return viewModel.characters
-        } else {
-            return viewModel.filteredCharacters
-        }
-    }
-    
-    
-    
 }
 
 #if DEBUG

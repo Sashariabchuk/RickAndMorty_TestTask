@@ -11,7 +11,6 @@ import Combine
 public class CharactersViewModel: ObservableObject {
     
     @Published private (set) var characters: [Character] = []
-    @Published private (set) var filteredCharacters: [Character] = []
     @Published var searchText = ""
     
     var characterListFull = false
@@ -21,21 +20,19 @@ public class CharactersViewModel: ObservableObject {
     var cancellable =  Set<AnyCancellable>()
     
     init() {
-        $searchText
-            .debounce(for: 0.1, scheduler: RunLoop.main)
-            .removeDuplicates()
-            .sink(receiveValue: { (text: String) in
-                if !text.isEmpty && text.count > 3 {
-                    self.getCharacters(for: text)
-                } else {
-                    self.filteredCharacters.removeAll()
-                }
-            })
-            .store(in: &cancellable)
+//        $searchText
+//            .debounce(for: 0.5, scheduler: RunLoop.main)
+//            .removeDuplicates()
+//            .sink(receiveValue: { (text: String) in
+//                if !text.isEmpty && text.count > 3 {
+//                    self.getCharacters(for: text)
+//                }
+//            })
+//            .store(in: &cancellable)
     }
     
     func getCharactersList() {
-        let endpoint = Endpoint.character(for: "\(currentPage)", name: searchText)
+        let endpoint = Endpoint.getCharacters(name: searchText, page: currentPage)
         
         request(endpoint)
             .mapError({ (error) -> Error in
@@ -52,23 +49,22 @@ public class CharactersViewModel: ObservableObject {
             .store(in: &cancellable)
     }
     
-    func getCharacters(for name: String = "") {
-        let endpoint = Endpoint.character(for: "\(currentPage)", name: searchText)
-        
-        request(endpoint)
-            .mapError({ (error) -> Error in
-                print(error)
-                return error
-            })
-            .sink(receiveCompletion: { _ in }, receiveValue: {
-                self.currentPage += 1
-                self.filteredCharacters.append(contentsOf: $0.results)
-                if $0.results.count < self.maxItemPerPage {
-                    self.characterListFull = true
-                }
-            })
-            .store(in: &cancellable)
-    }
+//    func getCharacters(for name: String = "") {
+//        let endpoint = Endpoint.getCharacters(name: searchText, page: currentPage)
+//
+//        request(endpoint)
+//            .mapError({ (error) -> Error in
+//                print(error)
+//                return error
+//            })
+//            .sink(receiveCompletion: { _ in }, receiveValue: {
+//                self.currentPage += 1
+//                if $0.results.count < self.maxItemPerPage {
+//                    self.characterListFull = true
+//                }
+//            })
+//            .store(in: &cancellable)
+//    }
     
     func request(_ endpoint: Endpoint) -> AnyPublisher<CharacterList, Error> {
 

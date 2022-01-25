@@ -18,7 +18,7 @@ extension Endpoint {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "rickandmortyapi.com"
-        components.path = "/api/character"
+        components.path = "/" + path
         components.queryItems = queryItems
         
         guard let url = components.url else {
@@ -28,10 +28,13 @@ extension Endpoint {
         return url
     }
     
-    static func character(for page: String, name: String = "") -> Self {
-        return Endpoint(path: "/user", queryItems: [
-            URLQueryItem(name: "page", value: page),
-            URLQueryItem(name: "name", value: name)
-        ])
+    static func getCharacters(name: String, page: Int) -> Self {
+        Endpoint(
+            path: "api/character/",
+            queryItems: [
+                URLQueryItem(name: "page", value: "\(page)"),
+                URLQueryItem(name: "name", value: name)
+            ]
+        )
     }
 }

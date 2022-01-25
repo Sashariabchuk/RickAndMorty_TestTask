@@ -18,6 +18,7 @@
 		758F07B7279DF77200AE4CF2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758F07B6279DF77200AE4CF2 /* APIService.swift */; };
 		758F07BA279E00F100AE4CF2 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758F07B9279E00F100AE4CF2 /* CharacterCell.swift */; };
 		758F07BC279E148500AE4CF2 /* SingleCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758F07BB279E148500AE4CF2 /* SingleCharacterView.swift */; };
+		75D1E57E27A07B1500BA79B1 /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D1E57D27A07B1500BA79B1 /* UserDefaultService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		758F07B6279DF77200AE4CF2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		758F07B9279E00F100AE4CF2 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		758F07BB279E148500AE4CF2 /* SingleCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCharacterView.swift; sourceTree = "<group>"; };
+		75D1E57D27A07B1500BA79B1 /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				758F07B6279DF77200AE4CF2 /* APIService.swift */,
+				75D1E57D27A07B1500BA79B1 /* UserDefaultService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				758F079E279DE82400AE4CF2 /* RickAndMorty_TestTaskApp.swift in Sources */,
 				758F07B0279DEA4B00AE4CF2 /* CharactersView.swift in Sources */,
 				758F07B4279DEA7900AE4CF2 /* Characters.swift in Sources */,
+				75D1E57E27A07B1500BA79B1 /* UserDefaultService.swift in Sources */,
 				75163EE0279F66EA00F5D922 /* Endpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
