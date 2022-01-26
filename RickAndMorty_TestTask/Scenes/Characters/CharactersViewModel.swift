@@ -19,15 +19,12 @@ public class CharactersViewModel: ObservableObject {
     
     var cancellable =  Set<AnyCancellable>()
     
-    init() {
-        getCharactersList()
-    }
-    
     func getCharactersList() {
         let endpoint = Endpoint.getCharacters(name: searchText, page: currentPage)
         
         request(endpoint)
             .mapError({ (error) -> Error in
+                //Log error
                 print(error)
                 return error
             })

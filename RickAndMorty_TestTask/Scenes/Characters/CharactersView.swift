@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct CharactersView: View {
-    
     @ObservedObject private var viewModel = CharactersViewModel()
-    
-    @State private var isSelected = false
+    @State private var showFavoritesOnly = false
     
     private var characters: [Character] {
         if viewModel.searchText.isEmpty {
@@ -26,28 +24,43 @@ struct CharactersView: View {
             VStack {
                 List {
                     ForEach(characters) { character in
-                        CharacterCell(character: character)
+                        if showFavoritesOnly {
+                            if FavoritesService.shared.contains(character) {
+                                NavigationLink {
+                                    SingleCharacterView(character: character)
+                                } label: {
+                                    CharacterCell(character: character)
+                                }
+                            }
+                        } else {
+                            NavigationLink {
+                                SingleCharacterView(character: character)
+                            } label: {
+                                CharacterCell(character: character)
+                            }
+                        }
                     }
                     
                     if viewModel.characterListFull == false {
                         ProgressView()
-                        .onAppear {
-                            viewModel.getCharactersList()
-                        }
+                            .onAppear {
+                                viewModel.getCharactersList()
+                            }
                     }
                 }
                 .searchable(text: $viewModel.searchText)
             }
-            .navigationTitle(isSelected ? "Favorites" : "Characters")
+            .navigationTitle(showFavoritesOnly ? "Favorites" : "Characters")
             .toolbar {
                 Button {
-                    isSelected.toggle()
+                    showFavoritesOnly.toggle()
                 } label: {
-                    Image(systemName: isSelected ? "star.fill" : "star")
+                    Image(systemName: showFavoritesOnly ? "star.fill" : "star")
                         .padding()
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
 

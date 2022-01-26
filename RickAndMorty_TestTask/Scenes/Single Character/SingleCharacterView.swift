@@ -11,7 +11,8 @@ import SDWebImageSwiftUI
 
 struct SingleCharacterView: View {
     
-     var character: Character
+    var character: Character
+    @ObservedObject private var viewModel = SingleCharacterViewModel()
     
     var body: some View {
         VStack {
@@ -20,7 +21,7 @@ struct SingleCharacterView: View {
                     WebImage(url: URL(string: character.image))
                         .resizable()
                         .placeholder {
-                                    Rectangle().foregroundColor(.gray)
+                            Rectangle().foregroundColor(.gray)
                         }
                         .scaledToFit()
                         .frame(width: 200, height: 200)
@@ -31,11 +32,18 @@ struct SingleCharacterView: View {
                     HStack {
                         Text("Name")
                             .fontWeight(.light)
-                        
                         Spacer()
-                        
-                        Image(systemName: "star")
-                            .frame(width: 50, height: 50)
+                        Button(action: {
+                            if FavoritesService.shared.contains(character) {
+                                FavoritesService.shared.remove(character)
+                            } else {
+                                FavoritesService.shared.add(character)
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: FavoritesService.shared.contains(character) ? "heart.fill" : "heart")
+                            }
+                        }
                     }
                     Spacer()
                     HStack {
@@ -66,7 +74,8 @@ struct SingleCharacterView: View {
                 .padding()
             }
         }
-        .cornerRadius(20)
+        .background(Color(UIColor.secondarySystemBackground))
+        .cornerRadius(10)
         .padding()
     }
 }
@@ -90,18 +99,18 @@ struct DetailTextCell: View {
 struct SingleCharacterView_Previews: PreviewProvider {
     static var previews: some View {
         SingleCharacterView(character:
-            Character(id: 1,
-                      name: "Rick",
-                      status: "alive",
-                      species: "species",
-                      type: "type",
-                      gender: "gender",
-                      origin: Origin(name: "OriginName", url: "OriginURL"),
-                      location: CharacterLocation(name: "LocationName", url: "LocationURL"),
-                      image: "image",
-                      episode: ["episode"],
-                      url: "url",
-                      created:"created")
+                                Character(id: 1,
+                                          name: "Rick",
+                                          status: "alive",
+                                          species: "species",
+                                          type: "type",
+                                          gender: "gender",
+                                          origin: Origin(name: "OriginName", url: "OriginURL"),
+                                          location: CharacterLocation(name: "LocationName", url: "LocationURL"),
+                                          image: "image",
+                                          episode: ["episode"],
+                                          url: "url",
+                                          created:"created")
         )
     }
 }

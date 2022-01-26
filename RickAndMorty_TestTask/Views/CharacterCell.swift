@@ -13,31 +13,39 @@ struct CharacterCell: View {
     
     var character: Character
     
+    init(character: Character) {
+        self.character = character
+    }
+    
     var body: some View {
-        return NavigationLink {
-            SingleCharacterView(character: character)
-        } label: {
-            HStack {
-                WebImage(url: URL(string: character.image))
-                    .resizable()
-                    .placeholder {
-                        Rectangle().foregroundColor(.gray)
-                    }
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                
-                VStack {
+        HStack {
+            WebImage(url: URL(string: character.image))
+                .resizable()
+                .placeholder {
+                    Rectangle().foregroundColor(.gray)
+                }
+                .scaledToFit()
+                .frame(width: 100, height: 100)
+            
+            VStack(alignment: .leading) {
+                HStack {
                     Text(character.name)
                         .font(.title3)
                         .multilineTextAlignment(.leading)
+
+                    Image(systemName: FavoritesService.shared.contains(character) ? "heart.fill" : "heart")
+                }
+                
+                HStack {
                     Text(character.status)
                         .fontWeight(.regular)
                         .multilineTextAlignment(.leading)
                 }
-                Spacer()
             }
-            .padding()
+            
+            Spacer()
         }
+        .padding()
     }
 }
 
